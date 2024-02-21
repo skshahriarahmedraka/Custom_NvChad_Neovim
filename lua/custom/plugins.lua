@@ -103,13 +103,30 @@ local plugins = {
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-        "yochem/cmp-htmx"
+      {
+       "yochem/cmp-htmx",
+        config = function()
+          require('cmp').setup()
+        end,
+      },
+      {
+        "zbirenbaum/copilot-cmp",
+        config = function()
+          require("copilot_cmp").setup()
+        end,
+      },
     },
-    config = {
-        sources = require('cmp').config.sources({
-            { name = "cmp-htmx" }
-        })
-    }
+    opts = {
+        sources = {
+          { name = "cmp-htmx" },
+           { name = "nvim_lsp", group_index = 2 },
+        { name = "copilot",  group_index = 2 },
+        { name = "luasnip",  group_index = 2 },
+        { name = "buffer",   group_index = 2 },
+        { name = "nvim_lua", group_index = 2 },
+        { name = "path",     group_index = 2 }, 
+      },
+    },
   },
   {
     "okuuva/auto-save.nvim",
@@ -122,6 +139,24 @@ local plugins = {
   },
   {
     "lewis6991/gitsigns.nvim"
+  },
+-- {
+--   "zbirenbaum/copilot.lua",
+--   cmd = "Copilot",
+--   build = ":Copilot auth",
+--   opts = {
+--     suggestion = { enabled = false },
+--     panel = { enabled = false },
+--     filetypes = {
+--       markdown = true,
+--       help = true,
+--     },
+--   },
+-- },
+  {
+    "zbirenbaum/copilot.lua",
+    event = "InsertEnter",
+    opts = overrides.copilot,
   },
 }
 

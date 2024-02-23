@@ -19,6 +19,29 @@ M.treesitter = {
     --   "python"
     -- },
   },
+textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["aa"] = "@parameter.outer",
+        ["ia"] = "@parameter.inner",
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true,
+      goto_next_start = {
+        ["]]"] = "@function.outer",
+      },
+      goto_previous_start = {
+        ["[["] = "@function.outer",
+      },
+    },
+  },
 }
 
 M.mason = {
@@ -41,8 +64,10 @@ M.mason = {
     -- shell stuff
     "shfmt",
     "gopls",
+    "goimports",
 
   },
+
 }
 
 -- git support in nvimtree
@@ -79,4 +104,10 @@ M.autosave = function()
       autosave.setup()
    end
 end
+
+
+
+M.gitsigns = {
+  current_line_blame = true,
+}
 return M

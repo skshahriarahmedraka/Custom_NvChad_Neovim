@@ -1,3 +1,4 @@
+local overrides = require "custom.configs.overrides"
 local plugins  = {
   {
     "vim-crystal/vim-crystal",
@@ -39,19 +40,35 @@ local plugins  = {
       require("core.utils").load_mappings("dap_go")
     end
   },
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   config = function()
+  --     require "plugins.configs.lspconfig"
+  --     require "custom.configs.lspconfig"
+  --   end,
+  -- },
+  -- {
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   ft = "go",
+  --   opts = function()
+  --     return require "custom.configs.null-ls"
+  --   end,
+  -- },
   {
     "neovim/nvim-lspconfig",
+    dependencies = {
+      -- format & linting
+      {
+        "jose-elias-alvarez/null-ls.nvim",
+        config = function()
+          require "custom.configs.null-ls"
+        end,
+      },
+    },
     config = function()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
-    end,
-  },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    ft = "go",
-    opts = function()
-      return require "custom.configs.null-ls"
-    end,
+    end, -- Override to setup mason-lspconfig
   },
   {
     "olexsmir/gopher.nvim",
@@ -126,6 +143,37 @@ local plugins  = {
       require("custom.configs.overrides").autosave()
     end,
    },
+
+ {
+    "max397574/better-escape.nvim",
+    event = "InsertEnter",
+    config = function()
+      require "custom.configs.better-escape"
+    end,
+  },
+
+  {
+    "tpope/vim-surround",
+    event = "BufReadPost",
+  },
+  {
+    "RRethy/vim-illuminate",
+    event = "BufReadPost",
+    config = function()
+      require "custom.configs.illuminate"
+    end,
+  },
+  {
+    "karb94/neoscroll.nvim",
+    event = "BufReadPost",
+    config = function()
+      require "custom.configs.neoscroll"
+    end
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    opts = overrides.gitsigns,
+  },
 }
 
 return plugins

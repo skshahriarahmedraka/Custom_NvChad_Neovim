@@ -174,6 +174,13 @@ local plugins  = {
     "lewis6991/gitsigns.nvim",
     opts = overrides.gitsigns,
   },
+ {
+  "zbirenbaum/copilot.lua",
+  cmd = "Copilot",
+  event = "InsertEnter",
+  opts = overrides.copilot,
+  },
 }
+
 
 return plugins
